@@ -3,13 +3,13 @@ import ProductGateway from "../../gateway/product.gateway";
 import { FindAllProductsDto } from "./find-all-products.dto";
 
 export default class FindAllProductsUseCase implements UseCaseInterface {
-    private _findAllUseCase: ProductGateway;
+    private _productRepository: ProductGateway;
 
-    constructor(findAllUseCase: ProductGateway) {
-        this._findAllUseCase = findAllUseCase;
+    constructor(productRepository: ProductGateway) {
+        this._productRepository = productRepository;
     }
     async execute(): Promise<FindAllProductsDto> {
-        const result = await this._findAllUseCase.findAll();
+        const result = await this._productRepository.findAll();
 
         return {
             products: result.map(productFromDb => ({

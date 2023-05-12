@@ -53,4 +53,21 @@ describe("storage-catalog product repository unit tests", () => {
         expect( result[1].description).toBe("333")
         expect( result[1].salePrice).toBe(5)
     })
+    it("should find a product", async () => {
+        await ProductModel.create({
+            id: "1",
+            name: "product",
+            description: "222",
+            salePrice: 10
+        })
+
+        const productRepository = new ProductRepository();
+
+        const result = await productRepository.find("1");
+
+        expect( result.id.id).toBe("1")
+        expect( result.name).toBe("product")
+        expect( result.description).toBe("222")
+        expect( result.salePrice).toBe(10)
+    })
 })
