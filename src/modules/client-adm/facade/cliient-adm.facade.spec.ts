@@ -4,6 +4,7 @@ import ClientRepository from "../repository/client.repository";
 import AddClientUseCase from "../usecase/add-client/add-client.usecase";
 import ClientAdmFacade from "./client-adm.facade";
 import FindClientUseCase from "../usecase/find-client/find-client.usecase";
+import CLientAdmFacadeFactory from "../factory/client-adm.facade.factory";
 
 
 describe('Client ADM facade test', () => {
@@ -28,14 +29,7 @@ describe('Client ADM facade test', () => {
     })
 
     it("should create a client", async () => {
-        const repository = new ClientRepository();
-
-        const addUseCase = new AddClientUseCase(repository);
-
-        const facade = new ClientAdmFacade({
-            addUseCase: addUseCase,
-            findUseCase: undefined
-        });
+        const facade = CLientAdmFacadeFactory.create();
 
         const input = {
             id: "1",
@@ -64,14 +58,7 @@ describe('Client ADM facade test', () => {
             updatedAt: new Date(),
         });
 
-        const repository = new ClientRepository();
-
-        const findUseCase = new FindClientUseCase(repository);
-
-        const facade = new ClientAdmFacade({
-            findUseCase: findUseCase,
-            addUseCase: undefined
-        })
+        const facade = CLientAdmFacadeFactory.create();
         
         const input = {
             id: "1"
