@@ -14,6 +14,7 @@ export default class AddClientUseCase implements UseCaseInterface {
 
     async execute(input: AddClientInputDto): Promise<AddClientOutputDto> {
         const clientProps = {
+            id: new Id(input.id) || new Id(),
             address: input.address,
             email: input.email,
             name: input.name
