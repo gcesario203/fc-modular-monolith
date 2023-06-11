@@ -46,6 +46,7 @@ describe("Find invoice usecase unit tests", () => {
 
         expect(mockInvoice.id.id).toEqual(output.id)
         expect(mockInvoice.name).toEqual(output.name)
+        expect(mockInvoice.createdAt).toStrictEqual(output.createdAt)
         expect(mockInvoice.document).toEqual(output.document)
         expect(mockInvoice.address).toMatchObject(output.address)
         expect(mockInvoice.items.map(item => ({
@@ -53,5 +54,6 @@ describe("Find invoice usecase unit tests", () => {
             name: item.name,
             price: item.price
         }))).toMatchObject(output.items)
+        expect(output.total).toEqual(300)
     })
 })
