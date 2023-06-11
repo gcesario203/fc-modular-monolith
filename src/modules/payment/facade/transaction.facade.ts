@@ -16,9 +16,6 @@ export default class TransactionFacade implements TransactionFacadeInterface
     }
 
     async process(input: ProcessPaymentFacadeInputDto): Promise<ProcessPaymentFacadeOutputDto> {
-
-        const output = await this._processUseCase.execute(input) as ProcessPaymentFacadeOutputDto;
-
-        return output;
+        return await this._processUseCase.execute(input) ;
     }
 }

@@ -71,5 +71,6 @@ describe("generate invoice use case unit tests", () => {
         expect(input.state).toEqual(output.state)
         expect(input.street).toEqual(output.street)
         expect(input.number).toEqual(output.number)
+        expect(input.complement).toEqual(output.complement)
     })
 })
