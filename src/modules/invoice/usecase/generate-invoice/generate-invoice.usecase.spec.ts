@@ -1,7 +1,8 @@
-import Id from "../../../../@shared/domain/value-object/id.value-object";
-import Product from "../../entity/invoice-product.entity";
-import Invoice from "../../entity/invoice.entity";
-import Address from "../../value-object/address.value-object";
+
+import Id from "../../../@shared/domain/value-object/id.value-object";
+import Product from "../../domain/entity/invoice-product.entity";
+import Invoice from "../../domain/entity/invoice.entity";
+import Address from "../../domain/value-object/address.value-object";
 import GenerateInvoiceUseCase from "./generate-invoice.usecase";
 
 const mockInvoice = new Invoice({
