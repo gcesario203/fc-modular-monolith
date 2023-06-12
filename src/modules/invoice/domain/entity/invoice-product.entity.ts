@@ -10,7 +10,7 @@ type ProductProps = {
     updatedAt?: Date
 }
 
-export default class Product extends BaseEntity implements AggregateRoot {
+export default class Product extends BaseEntity {
     private _name: string
     private _price: number
 
