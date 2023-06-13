@@ -41,11 +41,11 @@ describe("Find all products unit tests", () => {
         expect( result.products[0].id).toBe("1")
         expect( result.products[0].name).toBe("product")
         expect( result.products[0].description).toBe("222")
-        expect( result.products[0].salePrice).toBe(10)
+        expect( result.products[0].salesPrice).toBe(10)
 
         expect( result.products[1].id).toBe("2")
         expect( result.products[1].name).toBe("product 2")
         expect( result.products[1].description).toBe("333")
-        expect( result.products[1].salePrice).toBe(5)
+        expect( result.products[1].salesPrice).toBe(5)
     })
 })

@@ -1,6 +1,8 @@
 import { string } from "yup/lib/locale"
 import PlaceOrderUseCase from "./place-order.usecase"
 import { PlaceOrderInputDto } from "./place-order.usecase.dto"
+import Product from "../../domain/product.entity"
+import Id from "../../../@shared/domain/value-object/id.value-object"
 
 describe("Place order use case unit tests", () => {
 
@@ -85,6 +87,32 @@ describe("Place order use case unit tests", () => {
             await expect(placeOrderUseCase["getProduct"]("0")).rejects.toThrow(
                 new Error("Product not found")
             )
+        })
+
+        it("should return a product", async () => {
+            const mockCatalogFacade = {
+                find: jest.fn().mockResolvedValue(Promise.resolve({
+                    id: "1",
+                    description: "Produto registrado dia x",
+                    name: "Camiseta do vasco",
+                    salesPrice: 50
+                }))
+            }
+
+            //@ts-expect-error
+            placeOrderUseCase["_catalogFacade"] = mockCatalogFacade;
+
+
+            await expect(placeOrderUseCase["getProduct"]("0")).resolves.toEqual(
+                new Product({
+                    id: new Id("1"),
+                    description: "Produto registrado dia x",
+                    name: "Camiseta do vasco",
+                    salesPrice: 50
+                })
+            )
+
+            expect(mockCatalogFacade.find).toHaveBeenCalledTimes(1)
         })
     })
 

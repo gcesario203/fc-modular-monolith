@@ -35,6 +35,6 @@ describe("storage-catalog find product unit test", () => {
         expect( result.id).toBe("1")
         expect( result.name).toBe("product")
         expect( result.description).toBe("222")
-        expect( result.salePrice).toBe(10)
+        expect( result.salesPrice).toBe(10)
     })
 })

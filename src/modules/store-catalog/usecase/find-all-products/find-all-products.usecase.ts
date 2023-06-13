@@ -16,7 +16,7 @@ export default class FindAllProductsUseCase implements UseCaseInterface {
                 id: productFromDb.id.id,
                 name: productFromDb.name,
                 description: productFromDb.description,
-                salePrice: productFromDb.salePrice,
+                salesPrice: productFromDb.salePrice,
             }))
         };
     }
