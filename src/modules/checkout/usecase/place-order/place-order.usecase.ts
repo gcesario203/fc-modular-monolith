@@ -6,6 +6,8 @@ import { PlaceOrderInputDto, PlaceOrderOutputDto } from "./place-order.usecase.d
 import StoreCatalogFacadeInterface from "../../../store-catalog/facade/store-catalog.facade.interface";
 import Product from "../../domain/product.entity";
 import Id from "../../../@shared/domain/value-object/id.value-object";
+import Client from "../../domain/client.entity";
+import Order from "../../domain/order.entity";
 
 
 type PlaceOrderUseCaseProps = {
@@ -35,6 +37,22 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
         if(!client) throw new Error("Client not found");
 
         await this.validateProducts(input);
+
+        const products = await Promise.all(
+            input.products.map(product => this.getProduct(product.productId))
+        )
+
+        const clientToExcute = new Client({
+            address: client.address,
+            email: client.email,
+            name: client.name,
+            id: new Id(client.id)
+        });
+
+        const order = new Order({
+            client: clientToExcute,
+            products
+        })
 
         return {
             id: "",
