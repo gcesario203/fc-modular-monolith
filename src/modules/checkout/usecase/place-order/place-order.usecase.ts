@@ -8,12 +8,18 @@ import Product from "../../domain/product.entity";
 import Id from "../../../@shared/domain/value-object/id.value-object";
 import Client from "../../domain/client.entity";
 import Order from "../../domain/order.entity";
+import TransactionFacadeInterface from "../../../payment/facade/transaction.facade.interface";
+import InvoiceFacadeInterface from "../../../invoice/facade/invoice.facade.interface";
+import CheckoutGateway from "../../gateway/checkout.gateway.interface";
 
 
 type PlaceOrderUseCaseProps = {
     clientFacade: ClientAdmFacadeInterface
-    // productFacade: ProductAdmFacadeInterface
-    // catalogFacade: StoreCatalogFacadeInterface
+    productFacade: ProductAdmFacadeInterface
+    catalogFacade: StoreCatalogFacadeInterface
+    paymentFacade: TransactionFacadeInterface
+    invoiceFacade: InvoiceFacadeInterface
+    checkoutRepository: CheckoutGateway
 }
 
 export default class PlaceOrderUseCase implements UseCaseInterface {
@@ -21,12 +27,21 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
     private _clientFacade: ClientAdmFacadeInterface
     private _productFacade: ProductAdmFacadeInterface
     private _catalogFacade: StoreCatalogFacadeInterface
+    private _paymentFacade: TransactionFacadeInterface
+    private _invoiceFacade: InvoiceFacadeInterface
+    private _checkoutRepository: CheckoutGateway
 
     constructor(props: PlaceOrderUseCaseProps) {
         this._clientFacade = (props || {}).clientFacade || null
 
-        // this._productFacade = (props || {}).productFacade || null
-        // this._catalogFacade = (props || {}).catalogFacade || null
+        this._productFacade = (props || {}).productFacade || null
+        this._catalogFacade = (props || {}).catalogFacade || null
+
+        this._invoiceFacade = (props || {}).invoiceFacade || null
+
+        this._paymentFacade = (props || {}).paymentFacade || null
+
+        this._checkoutRepository =  (props || {}).checkoutRepository || null
     }
 
 

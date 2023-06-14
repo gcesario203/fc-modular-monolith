@@ -9,6 +9,15 @@ describe("Place order use case unit tests", () => {
     const mockDate = new Date(2000, 1, 1)
 
     describe("execute method", () => {
+        beforeAll(() => {
+            jest.useFakeTimers("modern")
+            jest.setSystemTime(mockDate)
+        })
+
+        afterAll(() => {
+            jest.useRealTimers()
+        })
+
         it("should thrown a error when client not found", async () => {
             const mockClientFacade = () => {
                 return {
@@ -18,7 +27,12 @@ describe("Place order use case unit tests", () => {
             }
 
             const placeOrderUseCase = new PlaceOrderUseCase({
-                clientFacade: mockClientFacade()
+                clientFacade: mockClientFacade(),
+                catalogFacade: null,
+                productFacade: null,
+                checkoutRepository: null,
+                invoiceFacade: null,
+                paymentFacade: null
             });
 
             const input: PlaceOrderInputDto = {
@@ -40,7 +54,12 @@ describe("Place order use case unit tests", () => {
             }
 
             const placeOrderUseCase = new PlaceOrderUseCase({
-                clientFacade: mockClientFacade()
+                clientFacade: mockClientFacade(),
+                catalogFacade: null,
+                productFacade: null,
+                checkoutRepository: null,
+                invoiceFacade: null,
+                paymentFacade: null
             });
 
             const input: PlaceOrderInputDto = {
@@ -60,6 +79,78 @@ describe("Place order use case unit tests", () => {
             )
 
             expect(mockValidateProducts).toHaveBeenCalledTimes(1)
+        })
+
+        it("place an order", async () => {
+            const clientProps = {
+                id: "1",
+                name: "Client 1",
+                document: "0000",
+                email: "xxx@xxx.com",
+                street: "Rua dos bobos",
+                number: "1",
+                complement: "",
+                city: "americana",
+                state: "sp",
+                zipCode: "0000"
+            }
+
+            const mockClientFacade = {
+                find: jest.fn().mockResolvedValue(Promise.resolve(clientProps)),
+                add: jest.fn()
+            }
+
+            const mockPaymentFacade = {
+                process: jest.fn()
+            }
+
+            const mockCheckoutRepository = {
+                addOrder: jest.fn(),
+                findOrder: jest.fn()
+            }
+
+            const mockInvoiceFacade = {
+                generate: jest.fn().mockResolvedValue({ id: "1i" }),
+                find: jest.fn()
+            }
+
+            const placeOrderUseCase = new PlaceOrderUseCase({
+                clientFacade: mockClientFacade,
+                catalogFacade: null,
+                productFacade: null,
+                checkoutRepository: mockCheckoutRepository,
+                invoiceFacade: mockInvoiceFacade,
+                paymentFacade: mockPaymentFacade
+            })
+
+            const products = {
+                "1": new Product({
+                    id: new Id("1"),
+                    name: "Product 1",
+                    description: "aaaa",
+                    salesPrice: 300
+                }),
+                "2": new Product({
+                    id: new Id("2"),
+                    name: "Product 2",
+                    description: "aaaa",
+                    salesPrice: 600
+                })
+            }
+
+            const mockValidateProducts = jest
+            //@ts-expect-error
+            .spyOn(placeOrderUseCase, "validateProducts")
+            //@ts-expect-error
+            .mockResolvedValue(null)
+
+            const mockGetProduct = jest
+            //@ts-expect-error
+            .spyOn(placeOrderUseCase, "getProduct")
+            //@ts-expect-error
+            .mockImplementation((productId: keyof typeof products) => {
+                return products[productId]
+            })
         })
     })
 
