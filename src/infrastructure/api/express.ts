@@ -8,6 +8,7 @@ import { ProductModel } from "../../modules/product-adm/repository/product.model
 import StoreProductModel from "../../modules/store-catalog/repository/product.model";
 import { productRoute } from "./routes/product/product.route";
 import { clientRoute } from "./routes/client/client.route";
+import { invoiceRoute } from "./routes/invoice/invoice.route";
 
 export const app: Express = express();
 
@@ -16,6 +17,8 @@ app.use(express.json());
 app.use('/products', productRoute)
 
 app.use('/clients', clientRoute)
+
+app.use('/invoice', invoiceRoute);
 
 export let sequelize: Sequelize;
 

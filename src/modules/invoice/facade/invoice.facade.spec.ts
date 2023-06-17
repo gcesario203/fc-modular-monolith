@@ -104,12 +104,12 @@ describe('Invoice facade test', () => {
         }))).toMatchObject(output.items)
         expect(output.total).toEqual(300)
 
-        expect(output.address.city).toEqual(createInput.city)
-        expect(output.address.zipCode).toEqual(createInput.zipCode)
-        expect(output.address.state).toEqual(createInput.state)
-        expect(output.address.street).toEqual(createInput.street)
-        expect(output.address.number).toEqual(createInput.number)
-        expect(output.address.complement).toEqual(createInput.complement)
+        expect(output.city).toEqual(createInput.city)
+        expect(output.zipCode).toEqual(createInput.zipCode)
+        expect(output.state).toEqual(createInput.state)
+        expect(output.street).toEqual(createInput.street)
+        expect(output.number).toEqual(createInput.number)
+        expect(output.complement).toEqual(createInput.complement)
     })
 
 }

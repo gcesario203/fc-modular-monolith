@@ -18,7 +18,12 @@ export default class FindInvoiceUseCase implements UseCaseInterface {
 
         return {
             id: invoice.id.id,
-            address: invoice.address,
+            city: invoice.address.city,
+            complement: invoice.address.complement,
+            number: invoice.address.number,
+            state: invoice.address.state,
+            street: invoice.address.street,
+            zipCode: invoice.address.zipCode,
             createdAt: invoice.createdAt,
             document: invoice.document,
             name: invoice.name,

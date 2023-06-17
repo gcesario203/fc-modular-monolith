@@ -1,5 +1,4 @@
 import UseCaseInterface from "../../@shared/usecase/usecase.interface";
-import Invoice from "../domain/entity/invoice.entity";
 import InvoiceFacadeInterface, { FindInvoiceFacadeUseCaseInputDTO, FindInvoiceFacadeUseCaseOutputDTO, GenerateInvoiceFacadeUseCaseInputDto, GenerateInvoiceFacadeUseCaseOutputDto } from "./invoice.facade.interface";
 
 type InvoiceFacadeProps = {

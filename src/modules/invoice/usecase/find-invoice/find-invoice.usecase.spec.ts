@@ -48,12 +48,18 @@ describe("Find invoice usecase unit tests", () => {
         expect(mockInvoice.name).toEqual(output.name)
         expect(mockInvoice.createdAt).toStrictEqual(output.createdAt)
         expect(mockInvoice.document).toEqual(output.document)
-        expect(mockInvoice.address).toMatchObject(output.address)
         expect(mockInvoice.items.map(item => ({
             id: item.id.id,
             name: item.name,
             price: item.price
         }))).toMatchObject(output.items)
         expect(output.total).toEqual(300)
+
+        expect(mockInvoice.address.city).toBe(output.city)
+        expect(mockInvoice.address.complement).toBe(output.complement)
+        expect(mockInvoice.address.number).toBe(output.number)
+        expect(mockInvoice.address.state).toBe(output.state)
+        expect(mockInvoice.address.street).toBe(output.street)
+        expect(mockInvoice.address.zipCode).toBe(output.zipCode)
     })
 })
