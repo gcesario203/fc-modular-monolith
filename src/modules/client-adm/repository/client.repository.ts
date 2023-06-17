@@ -6,7 +6,7 @@ import { ClientModel } from "./client.model";
 
 
 export default class ClientRepository implements ClientGateway {
-  async add(client: Client): Promise<void> {
+  async add(client: Client): Promise<Client> {
     await ClientModel.create({
       id: client.id.id,
       name: client.name,
@@ -21,6 +21,8 @@ export default class ClientRepository implements ClientGateway {
       createdAt: client.createdAt,
       updatedAt: client.updatedAt,
     })
+
+    return client;
   }
   async find(id: string): Promise<Client> {
     const client = await ClientModel.findOne({ where: { id } });
