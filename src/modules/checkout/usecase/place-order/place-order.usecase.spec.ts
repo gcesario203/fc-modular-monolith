@@ -185,7 +185,7 @@ describe("Place order use case unit tests", () => {
 
                 expect(mockGetProduct).toHaveBeenCalledTimes(2)
                 expect(mockCheckoutRepository.addOrder).toHaveBeenCalledTimes(1)
-                
+
                 expect(mockPaymentFacade.process).toHaveBeenCalledTimes(1)
                 expect(mockPaymentFacade.process).toHaveBeenCalledWith({
                     orderId: output.id,
@@ -193,6 +193,70 @@ describe("Place order use case unit tests", () => {
                 })
 
                 expect(mockInvoiceFacade.generate).toHaveBeenCalledTimes(0)
+            })
+
+            it("should be approved", async () => {
+                const paymentProps = {
+                    transactionId: "1t",
+                    orderId: "1o",
+                    amount: 900,
+                    status: "approved",
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                }
+                mockPaymentFacade.process = mockPaymentFacade.process.mockResolvedValue(Promise.resolve(paymentProps))
+
+                const input: PlaceOrderInputDto = {
+                    clientId: "1c",
+                    products: [{ productId: "1" }, { productId: "2" }]
+                }
+
+                let output = await placeOrderUseCase.execute(input)
+
+                expect(output.invoiceId).toBeDefined();
+
+                expect(output.total).toBe(900);
+
+                expect(output.products).toStrictEqual([
+                    { productId: "1" },
+                    { productId: "2" }
+                ])
+
+                expect(mockClientFacade.find).toHaveBeenCalledTimes(1);
+                expect(mockClientFacade.find).toHaveBeenCalledWith({ id: "1c" });
+
+                expect(mockValidateProducts).toHaveBeenCalledTimes(1);
+                expect(mockValidateProducts).toHaveBeenCalledWith(input);
+
+                expect(mockGetProduct).toHaveBeenCalledTimes(2)
+                expect(mockCheckoutRepository.addOrder).toHaveBeenCalledTimes(1)
+
+                expect(mockPaymentFacade.process).toHaveBeenCalledTimes(1)
+                expect(mockPaymentFacade.process).toHaveBeenCalledWith({
+                    orderId: output.id,
+                    amount: output.total
+                })
+
+                expect(mockInvoiceFacade.generate).toHaveBeenCalledTimes(1)
+
+                expect(mockInvoiceFacade.generate).toHaveBeenCalledWith({
+                    name: clientProps.name,
+                    city: clientProps.city,
+                    complement: clientProps.complement,
+                    document: clientProps.document,
+                    number: clientProps.number,
+                    state: clientProps.state,
+                    street: clientProps.street,
+                    zipCode: clientProps.zipCode,
+                    id: clientProps.id,
+                    items: Object.values(products).map(product => ({
+                        id: product.id.id,
+                        name: product.name,
+                        price: product.salesPrice
+                    }))
+                })
+
+                expect(output.status).toBe("approved")
             })
         })
     })
