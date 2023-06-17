@@ -35,7 +35,13 @@ describe('Client ADM facade test', () => {
             id: "1",
             name: "Benicio de souza",
             email: "xxx@xxx.com",
-            address: "bnklfbjkfbfjk"
+            street: "Teste rua",
+            document: "aaaaa",
+            number: "Teste numero",
+            complement: "Teste complemento",
+            city: "Teste cidade",
+            state: "Teste estado",
+            zipCode: "Teste cep",
         };
 
         await facade.add(input);
@@ -44,8 +50,15 @@ describe('Client ADM facade test', () => {
 
         expect(createdClient.id).toEqual(input.id)
         expect(createdClient.name).toEqual(input.name)
-        expect(createdClient.address).toEqual(input.address)
         expect(createdClient.email).toEqual(input.email)
+        expect(createdClient.document).toEqual(input.document)
+
+        expect(createdClient.city).toEqual(input.city)
+        expect(createdClient.state).toEqual(input.state)
+        expect(createdClient.street).toEqual(input.street)
+        expect(createdClient.number).toEqual(input.number)
+        expect(createdClient.complement).toEqual(input.complement)
+        expect(createdClient.zipCode).toEqual(input.zipCode)
     })
 
     it("should find a client", async () => {
@@ -53,7 +66,13 @@ describe('Client ADM facade test', () => {
             id: "1",
             name: "Client 1",
             email: "x@x.com",
-            address: "Address 1",
+            street: "Teste rua",
+            document: "aaaaa",
+            number: "Teste numero",
+            complement: "Teste complemento",
+            city: "Teste cidade",
+            state: "Teste estado",
+            zipCode: "Teste cep",
             createdAt: new Date(),
             updatedAt: new Date(),
         });
@@ -68,10 +87,17 @@ describe('Client ADM facade test', () => {
 
         expect(result.id).toEqual(client.id)
         expect(result.name).toEqual(client.name)
-        expect(result.address).toEqual(client.address)
         expect(result.email).toEqual(client.email)
         expect(result.createdAt).toStrictEqual(client.createdAt)
         expect(result.updatedAt).toStrictEqual(client.updatedAt)
+        expect(result.document).toStrictEqual(client.document)
+
+        expect(result.city).toEqual(client.city)
+        expect(result.state).toEqual(client.state)
+        expect(result.street).toEqual(client.street)
+        expect(result.number).toEqual(client.number)
+        expect(result.complement).toEqual(client.complement)
+        expect(result.zipCode).toEqual(client.zipCode)
     })
 }
 )

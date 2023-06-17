@@ -11,6 +11,7 @@ import Order from "../../domain/order.entity";
 import TransactionFacadeInterface from "../../../payment/facade/transaction.facade.interface";
 import InvoiceFacadeInterface from "../../../invoice/facade/invoice.facade.interface";
 import CheckoutGateway from "../../gateway/checkout.gateway.interface";
+import Address from "../../domain/value-objects/address.value-object";
 
 
 type PlaceOrderUseCaseProps = {
@@ -58,7 +59,14 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
         )
 
         const clientToExcute = new Client({
-            address: client.address,
+            address: new Address({
+                city: client.city,
+                complement: client.complement,
+                number: client.number,
+                state: client.state,
+                street: client.street,
+                zipCode: client.zipCode
+            }),
             email: client.email,
             name: client.name,
             id: new Id(client.id)
@@ -69,12 +77,41 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
             products
         })
 
+        const payment = await this._paymentFacade.process({
+            orderId: order.id.id,
+            amount: order.total
+        })
+
+        const invoice = payment.status === "approved" ?
+                                            await this._invoiceFacade.generate({
+                                                name: client.name,
+                                                city: client.city,
+                                                complement: client.complement,
+                                                document: client.document,
+                                                number: client.number,
+                                                state: client.state,
+                                                street: client.street,
+                                                zipCode: client.zipCode,
+                                                id: client.id,
+                                                items: products.map(product => ({
+                                                    id: product.id.id,
+                                                    name: product.name,
+                                                    price: product.salesPrice
+                                                }))
+                                            }) : null;
+
+        payment.status === "approved" && order.approve();
+
+        await this._checkoutRepository.addOrder(order);
+
         return {
-            id: "",
-            invoiceId: "",
-            products: [],
-            status: "",
-            total: 0
+            id: order.id.id,
+            invoiceId: payment.status === "approved" ? invoice.id : null,
+            status: order.status,
+            total: order.total,
+            products: order.products.map(product => ({
+                productId: product.id.id
+            }))
         }
     }
 
