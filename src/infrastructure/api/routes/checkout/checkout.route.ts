@@ -14,7 +14,6 @@ checkoutRoute.post("/", async (req: Request, res: Response) => {
 
         res.send(output)
     } catch (err) {
-        console.log('aaa', err)
       res.status(500).send(err)
     }
 });
