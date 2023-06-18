@@ -3,7 +3,7 @@ import { OrderClientModel } from "./client.model";
 import { OrderProductModel } from "./product.model";
 
 
-@Table({ tableName: "orders-products", timestamps: false })
+@Table({ tableName: "orders", timestamps: false })
 export default class OrderModel extends Model {
   @PrimaryKey
   @Column({ allowNull: false })

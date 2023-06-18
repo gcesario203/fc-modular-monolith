@@ -13,7 +13,7 @@ import { InvoiceProductModel } from "../../../../modules/invoice/repository/mode
 import TransactionModel from "../../../../modules/payment/repository/transaction.model";
 
 // ProductAdm
-import { ProductModel as ProductAdmModel } from "../../../../modules/product-adm/repository/product.model";
+import { ProductAdmModel } from "../../../../modules/product-adm/repository/product.model";
 
 // ProductCatalog
 import StoreProductModel from "../../../../modules/store-catalog/repository/product.model";
@@ -54,6 +54,14 @@ describe("E2E test for checkout", () => {
     });
 
     it("should create a placeorder", async () => {
+        const productProps = {
+            id: "1",
+            name: "test",
+            description: "test",
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        }
+
         await ClientModelAdm.create({
             id: "1",
             name: "test",
@@ -70,14 +78,14 @@ describe("E2E test for checkout", () => {
         })
 
         await ProductAdmModel.create({
-            id: "1",
-            name: "test",
-            description: "test",
-            salesPrice: 100,
+            ...productProps,
             purchasePrice: 50,
-            stock: 2,
-            createdAt: new Date(),
-            updatedAt: new Date(),
+            stock: 1,
+        })
+
+        await StoreProductModel.create({
+            ...productProps,
+            salesPrice: 100
         })
 
         const response = await request(app)

@@ -12,7 +12,7 @@ import { InvoiceProductModel } from "../../modules/invoice/repository/model/invo
 import TransactionModel from "../../modules/payment/repository/transaction.model";
 
 // ProductAdm
-import { ProductModel as ProductAdmModel } from "../../modules/product-adm/repository/product.model";
+import { ProductAdmModel } from "../../modules/product-adm/repository/product.model";
 
 // ProductCatalog
 import StoreProductModel from "../../modules/store-catalog/repository/product.model";

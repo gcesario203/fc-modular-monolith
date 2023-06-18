@@ -9,7 +9,7 @@ import { default as StoreProductModel } from "../../store-catalog/repository/pro
 import { InvoiceModel } from "../../invoice/repository/model/invoice.model";
 import { InvoiceProductModel } from "../../invoice/repository/model/invoice.product.model";
 import TransactionModel from "../../payment/repository/transaction.model";
-import { ProductModel as ProductAdmModel } from "../../product-adm/repository/product.model";
+import { ProductAdmModel } from "../../product-adm/repository/product.model";
 
 describe('Invoice repository test', () => {
     let sequelize: Sequelize;
