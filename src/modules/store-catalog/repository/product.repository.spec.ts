@@ -28,13 +28,13 @@ describe("storage-catalog product repository unit tests", () => {
             id: "1",
             name: "product",
             description: "222",
-            salePrice: 10
+            salesPrice: 10
         })
         await ProductModel.create({
             id: "2",
             name: "product 2",
             description: "333",
-            salePrice: 5
+            salesPrice: 5
         })
 
         const productRepository = new ProductRepository();
@@ -46,19 +46,19 @@ describe("storage-catalog product repository unit tests", () => {
         expect( result[0].id.id).toBe("1")
         expect( result[0].name).toBe("product")
         expect( result[0].description).toBe("222")
-        expect( result[0].salePrice).toBe(10)
+        expect( result[0].salesPrice).toBe(10)
 
         expect( result[1].id.id).toBe("2")
         expect( result[1].name).toBe("product 2")
         expect( result[1].description).toBe("333")
-        expect( result[1].salePrice).toBe(5)
+        expect( result[1].salesPrice).toBe(5)
     })
     it("should find a product", async () => {
         await ProductModel.create({
             id: "1",
             name: "product",
             description: "222",
-            salePrice: 10
+            salesPrice: 10
         })
 
         const productRepository = new ProductRepository();
@@ -68,6 +68,6 @@ describe("storage-catalog product repository unit tests", () => {
         expect( result.id.id).toBe("1")
         expect( result.name).toBe("product")
         expect( result.description).toBe("222")
-        expect( result.salePrice).toBe(10)
+        expect( result.salesPrice).toBe(10)
     })
 })

@@ -7,14 +7,14 @@ const product1 = new Product({
     id: new Id("1"),
     name: "product",
     description: "222",
-    salePrice: 10
+    salesPrice: 10
 })
 
 const product2 = new Product({
     id: new Id("2"),
     name: "product 2",
     description: "333",
-    salePrice: 5
+    salesPrice: 5
 })
 
 const products = [product1, product2]

@@ -15,8 +15,11 @@ export class ProductModel extends Model {
   @Column({ allowNull: false })
   description: string;
 
-  @Column({ allowNull: false, field: "price" })
+  @Column({ allowNull: false })
   purchasePrice: number;
+
+  @Column({ allowNull: true })
+  salesPrice: number;
 
   @Column({ allowNull: false, field: "stock" })
   stock: number;

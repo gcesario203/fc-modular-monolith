@@ -29,13 +29,13 @@ describe("store-catalog facade unit tests", () => {
             id: "1",
             name: "product",
             description: "222",
-            salePrice: 10
+            salesPrice: 10
         })
         await ProductModel.create({
             id: "2",
             name: "product 2",
             description: "333",
-            salePrice: 5
+            salesPrice: 5
         })
 
 
@@ -61,7 +61,7 @@ describe("store-catalog facade unit tests", () => {
             id: "1",
             name: "product",
             description: "222",
-            salePrice: 10
+            salesPrice: 10
         })
 
         const input = {
